@@ -7,7 +7,7 @@ typedef struct Node {
 }Node;
 
 
-Node* List_creare(int length)
+Node* List_create(int length)
 {
 	if (length <= 0) return NULL;
 	Node* head = (Node*)malloc(sizeof(Node));//创建头节点
@@ -43,9 +43,28 @@ void Free(Node* head)//if (head){ Node* cursor = head->next; free(head); Free(cu
 	}
 }
 
+void List_Print(Node* head)
+{
+	if (head == NULL) { printf("error\n");  return; }
+	Node* cursor = head;
+	printf("head--->");
+	while (cursor->next != NULL)
+	{
+		printf("%d--->", cursor->next->data);
+		cursor = cursor->next;
+	}
+	printf("NULL\n");
+}
 
+int main()
+{
+	int len = 10;
+	Node* first = List_create(len);
 
+	List_Print(first);
+	Free(first);
 
+}
 
 
 

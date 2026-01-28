@@ -56,10 +56,65 @@ void List_Print(Node* head)
 	printf("NULL\n");
 }
 
+void List_add_in_end(Node* head)//不支持空链表
+{
+	if (head == NULL) { printf("error\n");  return; }
+	Node* cursor = head;
+	while (cursor->next != NULL)
+	{
+		cursor = cursor->next;
+	}
+	Node* new_node = (Node*)malloc(sizeof(Node));
+	if (new_node == NULL) { printf("error\n");  return; }
+	new_node->next = NULL;
+	new_node->data = cursor->data+1;
+	cursor->next = new_node;
+	return;
+}
+
+void List_add_in_all(Node* head, int pos)//pos适用于0-length
+{
+	if (head == NULL) { printf("error\n");  return; }	
+	Node* new_node = (Node*)malloc(sizeof(Node));	
+	if (new_node == NULL) { printf("error\n");  return; }
+	Node* cursor = head;
+	int i = 0;
+	if(pos <0) { printf("error\n");  return; }
+	else if (pos == 0)
+	{
+		new_node->next = cursor->next;
+		cursor->next = new_node;
+		new_node->data = 1;
+
+	}
+	else {
+		while (i < pos && cursor != NULL)
+		{
+			cursor = cursor->next;
+			i++;
+		}
+		if(i!=pos) { printf("error\n");  return; }
+		new_node->next = cursor->next;
+		new_node->data = cursor->data + 1;
+		cursor->next = new_node;
+	}
+		cursor = new_node->next;
+		while (cursor != NULL)
+		{
+			cursor->data += 1;
+			cursor = cursor->next;
+		}
+}
+
 int main()
 {
 	int len = 10;
 	Node* first = List_create(len);
+	//for (int j = 0; j < 5; j++)
+	//{
+	//	List_add_in_end(first);
+	//}
+	List_add_in_all(first, 10);
 
 	List_Print(first);
 	Free(first);

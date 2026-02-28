@@ -4,6 +4,6 @@ using namespace std;
 
 int main()
 {
-    //list<int> mylist;
+    list<int> mylist;
     cout<<"Enter the number of elements in the list: ";
 }

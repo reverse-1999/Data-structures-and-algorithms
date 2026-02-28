@@ -178,20 +178,69 @@ void List_Reverse_2(Node* head)//反转链表,无哨兵头节点
 	return;
 }
 
+Node* Combine_List(Node* head1,Node* head2)//合并两顺序链表(从小到大),无哨兵头节点,返回合并后的链表有哨兵节点
+{	
+	Node* cursor11 = head1;
+	Node* cursor12 = head1;
+	Node* cursor21 = head2;
+	Node* cursor22 = head2;
+	Node* head = (Node*)malloc(sizeof(Node));//创建头节点
+	if (head == NULL) return NULL;
+	head->data = 0;
+	head->next = NULL;
+
+
+	if(head1 == NULL || cursor11->data >= cursor21->data) { head->next = head2; }
+	else if(head2 == NULL || cursor11->data < cursor21->data) { head->next = head1; }
+	else { free(head);  printf("error\n");  return NULL; }
+
+	while (cursor11 != NULL && cursor21 != NULL)
+	{
+		if (cursor11->data >= cursor21->data)
+		{
+			while (cursor21->next != NULL && cursor11->data >= cursor21->next->data )
+			{
+				cursor21 = cursor21->next;
+				cursor22 = cursor22->next;
+			}
+			cursor22 = cursor22->next;
+			cursor21->next = cursor11;
+			cursor21 = cursor22;
+		}
+		else
+		{
+			while (cursor11->next != NULL && cursor11->data < cursor21->next->data)
+			{
+				cursor11 = cursor11->next;
+				cursor12 = cursor12->next;
+			}
+			cursor12 = cursor12->next;
+			cursor11->next = cursor21;
+			cursor11 = cursor12;
+		}
+	}
+	return head;
+}
+
 int main()
 {
 	int len = 10;
 	Node* first = List_create(len);
-	//for (int j = 0; j < 5; j++)
-	//{
-	//	List_add_in_end(first);
-	//}
-	List_add_in_all(first, 10);
-	List_delete(first, 5);
+	Node* second = List_create(5);
+	for (int j = 1; j < 5; j++)
+	{
+		List_delete(first,j);
+	}
+	//List_add_in_all(first, 10);
+	//List_delete(first, 5);
 	List_Print(first);
-	List_Reverse(first);
-	List_Print(first);
+	List_Print(second);
+	//List_Reverse(first);
+	//List_Print(first);
+	Node* N = Combine_List(first->next, second->next);
+	List_Print(N);
 	Free(first);
+	Free(second);
 
 }
 

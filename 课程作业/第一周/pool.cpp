@@ -30,4 +30,4 @@ int main() {
 	cout  << p.calculate_fence_cost() << endl;
 	cout  << p.calculate_cement_cost() << endl;
     return 0;
-}
+}/////

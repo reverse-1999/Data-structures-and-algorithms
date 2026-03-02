@@ -111,4 +111,4 @@ cout<<array.Contains(e);//某个元素是否存在
 
 return 0;
 
-}
+}//////

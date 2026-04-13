@@ -40,7 +40,31 @@ public:
     }
 
     ~linkStack() {
-        //完成代码
+        while (elem) {
+            node* tmp = elem;
+            elem = elem->next;
+            delete tmp;
+        }
+    }
+
+    void push(const elemType& x) {
+        elem = new node(x, elem);
+    }
+
+    void pop() {
+        if (elem) {
+            node* tmp = elem;
+            elem = elem->next;
+            delete tmp;
+        }
+    }
+
+    elemType& top() {
+        return elem->data;
+    }
+
+    bool empty() const {
+        return elem == NULL;
     }
 };
 
@@ -61,16 +85,34 @@ public:
     }
 
     void clear() {
-        //完成代码
+        clear(root);
+        root = NULL;
     }
 
     void createTree(Type flag) {
-        //完成代码
+        queue<Node<Type>**> q;
+        q.push(&root);
+        Type val;
+        while (!q.empty()) {
+            Node<Type>** p = q.front();
+            q.pop();
+            cin >> val;
+            if (val == flag) {
+                *p = NULL;
+            } else {
+                *p = new Node<Type>(val);
+                q.push(&((*p)->left));
+                q.push(&((*p)->right));
+            }
+        }
     }
 
 private:
     void clear(Node<Type>* t) {
-        //完成代码
+        if (!t) return;
+        clear(t->left);
+        clear(t->right);
+        delete t;
     }
 };
 
@@ -87,6 +129,8 @@ public:
 public:
     const BinaryTree<Type>& T;
     Node<Type>* current;
+    virtual operator bool() const { return current != NULL; }
+    virtual Type operator()() const { return current->data; }
 };
 
 template <class Type>
@@ -100,11 +144,23 @@ public:
     ~Preorder() {}
 
     void First() {
-        //完成代码
+        while (!s.empty()) s.pop();
+        if (this->T.root)
+            s.push(this->T.root);
+        operator++();
     }
 
     void operator++() {
-        //完成代码
+        if (s.empty()) {
+            this->current = NULL;
+            return;
+        }
+        this->current = s.top();
+        s.pop();
+        if (this->current) {
+            if (this->current->right) s.push(this->current->right);
+            if (this->current->left) s.push(this->current->left);
+        }
     }
 
 protected:
@@ -122,11 +178,30 @@ public:
     ~Postorder() {}
 
     void First() {
-        //完成代码
+        while (!s.empty()) s.pop();
+        if (this->T.root)
+            s.push(StNode<Type>(this->T.root));
+        operator++();
     }
 
     void operator++() {
-        //完成代码
+        this->current = NULL;
+        while (!s.empty()) {
+            StNode<Type>& topNode = s.top();
+            if (topNode.TimesPop == 0) {
+                topNode.TimesPop++;
+                if (topNode.node->left)
+                    s.push(StNode<Type>(topNode.node->left));
+            } else if (topNode.TimesPop == 1) {
+                topNode.TimesPop++;
+                if (topNode.node->right)
+                    s.push(StNode<Type>(topNode.node->right));
+            } else {
+                this->current = topNode.node;
+                s.pop();
+                break;
+            }
+        }
     }
 
 protected:
@@ -137,12 +212,30 @@ template <class Type>
 class Inorder : public Postorder<Type> {
 public:
     Inorder(const BinaryTree<Type>& R) : Postorder<Type>(R) {}
+    void First() {
+        while (!this->s.empty()) this->s.pop();
+        Node<Type>* p = this->T.root;
+        while (p) {
+            this->s.push(StNode<Type>(p));
+            p = p->left;
+        }
+        operator++();
+    }
     void operator++();
 };
 
 template <class Type>
 void Inorder<Type>::operator++() {
-    //完成代码
+    this->current = NULL;
+    if (this->s.empty()) return;
+    StNode<Type> topNode = this->s.top();
+    this->s.pop();
+    this->current = topNode.node;
+    Node<Type>* p = topNode.node->right;
+    while (p) {
+        this->s.push(StNode<Type>(p));
+        p = p->left;
+    }
 }
 
 int main() {

@@ -32,7 +32,7 @@ TreeNode* buildTree(const vector<int>& nums) {
         }
         i++;
     }
-    
+    return root;
     /********** End **********/
 }
 

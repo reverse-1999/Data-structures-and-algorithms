@@ -42,8 +42,10 @@ TreeNode* buildTree(const vector<int>& nums) {
             q.push(node->right);
         }
         i++;
-    }
+    } 
+    return root;
     /********** End **********/
+   
 }
 
 // 利用前序遍历统计路径和等于 target 的根到叶路径条数

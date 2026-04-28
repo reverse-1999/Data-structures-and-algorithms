@@ -1,2 +1,4 @@
-﻿  List.cpp
-  List.vcxproj -> D:\code c++\Data structures and algorithms\List\x64\Debug\List.exe
+﻿  c.cpp
+  LINK : 没有找到 D:\code c++\Data structures and algorithms\List\x64\Debug\List.exe 或上一个增量链接没有生成它；正在执行完全链接
+List.obj : error LNK2005: main 已经在 c.obj 中定义
+D:\code c++\Data structures and algorithms\List\x64\Debug\List.exe : fatal error LNK1169: 找到一个或多个多重定义的符号

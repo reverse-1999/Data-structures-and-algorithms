@@ -1,12 +1,44 @@
 #include <iostream>
 #include <vector>
-#include <climits>
 using namespace std;
 
-// graph 用邻接矩阵存图，没边的位置可以自己约定成 0 或 INF。
-int kruskal(const vector<vector<int>> &graph, int start)
+int kruskal(const vector<vector<int>> &graph)
 {
-	
+	int n = graph.size();
+	vector<vector<int>> e;
+	for (int i = 0; i < n; ++i)
+		for (int j = i + 1; j < n; ++j)
+			if (graph[i][j])
+				e.push_back({graph[i][j], i, j});
+	for (int i = 0; i < e.size(); ++i)
+		for (int j = 0; j < e.size() - 1; ++j)
+			if (e[j][0] > e[j + 1][0])
+			{
+				vector<int> t = e[j];
+				e[j] = e[j + 1];
+				e[j + 1] = t;
+			}
+	vector<int> p(n);
+	for (int i = 0; i < n; ++i) p[i] = i;
+	int w = 0, c = 0;
+	for (int k = 0; k < e.size(); ++k)
+	{
+		int u = e[k][1], v = e[k][2];
+		// 找 u 的根
+		int ru = u;
+		while (p[ru] != ru) ru = p[ru];
+		// 找 v 的根
+		int rv = v;
+		while (p[rv] != rv) rv = p[rv];
+
+		if (ru != rv)
+		{
+			p[rv] = ru;
+			w += e[k][0];
+			if (++c == n - 1) break;
+		}
+	}
+	return c == n - 1 ? w : -1;
 }
 
 int main()
@@ -25,10 +57,6 @@ int main()
 			graph[v][u] = w;
 		}
 	}
-
-	int start = 0;
-	cin >> start;
-
-	cout << kruskal(graph, start) << endl;
+	cout << kruskal(graph) << endl;
 	return 0;
 }

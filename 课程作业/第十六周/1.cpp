@@ -4,24 +4,15 @@
 using namespace std;
 
 void backtrack(vector<int>& candidates, int target, int start, vector<int>& path, vector<vector<int>>& result) {
-    if(candidates[start] > target) return;
-    vector<int> dp(target,0);
-    int size = candidates.size();
-    int res = 0;
-    for(int i = start; i < size-1;i++)
-    {
-        dp[candidates[i]] = 1;
+    if (target == 0) {
+        result.push_back(path);
+        return;
     }
-    for(int j = candidates[start];j <= target;j++)
-    {
-        for(int k = start;k<size-1;k++)
-        {
-            if(j-candidates[k] >= 0) dp[j] += dp[j-candidates[k]];
-        }
-    }
-    for(int j = 1;j <= target;j++)
-    {
-        cout<<dp[j]<<' ';
+    for (int i = start; i < candidates.size(); i++) {
+        if (candidates[i] > target) break;
+        path.push_back(candidates[i]);
+        backtrack(candidates, target - candidates[i], i, path, result);
+        path.pop_back();
     }
 }
 

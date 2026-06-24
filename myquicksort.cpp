@@ -7,21 +7,25 @@ int Partition(int arr[], int low, int high)
     int pivot = arr[high];
     int l = low;
     int r = high - 1;
-    while(l < r)
+
+    while(l <= r)
     {
-        if(arr[l]<pivot){
+        while(arr[l]<pivot){
             l++;
         }
-        if(arr[r]>=pivot){
+        while(arr[r]>=pivot && l < r){
             r--;
         }
         if(l < r)
         {
             swap(arr[l],arr[r]);
         }
+        if(l == r)
+        { 
+            swap(arr[l],arr[high]);
+            return l;
+        }
     }
-    
-    swap(arr[l],arr[high]);
     return l;
 }
 

@@ -33,7 +33,7 @@ int strStr(const string& haystack, const string& needle) {
         else if (j == 0) {j = -1;}  
         else { j = next[j-1]+1; }
     }
-    if (j == static_cast<int>(needle.length())) return i - j;
+    if (j == needle.length()) return i - j;
     return -1;
     
 // 核心代码结束：如果匹配成功，返回起始索引

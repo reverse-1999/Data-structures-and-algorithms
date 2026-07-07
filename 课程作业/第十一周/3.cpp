@@ -17,10 +17,10 @@ int main() {
     vector<int> windows(N, 0);
     vector<int> counts(N, 0);
 
-    // 处理每个到达的病人
+    // 逐个病人分配到当前最早空闲的窗口
     for (int i = 0; i < M; ++i) {
         int arrival_time = arrival_times[i];
-        // 找到最早可用的窗口
+        // 找到当前最早可用的窗口
         int min_time = windows[0];
         int min_index = 0;
         for (int j = 1; j < N; ++j) {
@@ -29,7 +29,7 @@ int main() {
                 min_index = j;
             }
         }
-        // 更新该窗口的服务时间和病人数量
+        // 更新该窗口的完成时间和接诊人数
         if (windows[min_index] < arrival_time) {
             windows[min_index] = arrival_time + T; // 病人到达时窗口空闲，直接服务
         } else {

@@ -24,7 +24,7 @@ struct BtNode *Buynode()
 /* 非递归 --先序中序 */
 struct BtNode *NiceCreateTreePI(const char *pstr, const char *istr, int n) 
 {
-    // TODO 生成树,递归解
+    // 根据先序序列的首元素确定根结点，再在中序序列中划分左右子树
     if (n <= 0) return NULL;
     struct BtNode *root = Buynode();
     root->data = pstr[0];
@@ -39,7 +39,7 @@ struct BtNode *NiceCreateTreePI(const char *pstr, const char *istr, int n)
 //  入栈
 void postOrder(BtNode *root)
 {
-    // TODO 后序遍历
+    // 使用显式栈模拟递归后序遍历
     if(root == nullptr) return;
     stack<BtNode*> s;
     BtNode* cur = root;

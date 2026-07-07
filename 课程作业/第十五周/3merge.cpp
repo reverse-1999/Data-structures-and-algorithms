@@ -3,7 +3,7 @@
 using namespace std;
 void Merge(int arr[], int low, int mid, int high)
 {
-    // TODO: 实现合并两个有序区间的逻辑
+    // 将左右两个有序区间按大小归并到临时数组中
     // low 为第 1 有序区的第 1 个元素， mid 为第 1 有序区的最后 1 个元素
     int *temp = (int *)malloc(sizeof(int) * (high - low + 1));
     int i = low, j = mid + 1, k = 0;
@@ -36,7 +36,7 @@ void Merge(int arr[], int low, int mid, int high)
 // 用递归应用二路归并函数实现排序——分治法
 void MergeSort(int arr[], int low, int high)
 {
-    // TODO: 实现归并排序的递归逻辑
+    // 分治拆分区间，递归排序后再合并
     if (low < high)
     {
         int mid = low + (high - low) / 2;

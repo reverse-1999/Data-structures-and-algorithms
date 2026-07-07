@@ -5,7 +5,7 @@ using namespace std;
 // 划分函数
 int Partition(int arr[], int low, int high)
 {
-    // TODO: 实现快速排序中的划分逻辑
+    // 选取最后一个元素作为基准值，左右指针向中间收缩
     int pivot = arr[high];
     int l = low;
     int r = high - 1;
@@ -41,7 +41,7 @@ int Partition(int arr[], int low, int high)
 // 快速排序
 void QuickSort(int arr[], int low, int high)
 {
-    // TODO: 实现快速排序的递归逻辑
+    // 递归处理基准值左右两侧的子区间
     if(low < high)
     {
         int pivotIndex = Partition(arr, low, high);

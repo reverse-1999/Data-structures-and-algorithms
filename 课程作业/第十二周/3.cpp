@@ -16,7 +16,7 @@ private:
     int sccCount;            // 强连通分量的数量
     void SCCUtil(int u)
     {
-        // TODO 完成强连通分量的计算
+        // Tarjan 算法：用 disc/low 维护搜索树和回边信息
         disc[u] = low[u] = time++;
         st.push(u);
         inStack[u] = true;

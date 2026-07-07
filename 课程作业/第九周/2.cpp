@@ -63,7 +63,7 @@ public:
             }
             HFMTree[i].code = code;
         }
-        // TODO 完成构建哈夫曼树的代码
+        // 叶子结点的编码已经由父结点链回溯生成
     }
 
     
@@ -88,7 +88,7 @@ public:
     void decode(string code) {
         string decodedString = "";
 
-        // TODO 完成Huffman译码结果输出函数
+        // 从根结点开始按 0/1 向左或向右下探，落到叶子结点就输出一个字符
         int current = 2 * leafSize - 2;  // 从根节点开始
         for (char c : code) {
             if (c == '0') {

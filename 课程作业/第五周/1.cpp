@@ -4,13 +4,13 @@
 using namespace std;
 
 string reverseString(const string& str) {
-    // 核心代码开始：创建一个字符数组来存储反转后的字符串
+    // 从后向前遍历原字符串，逐个追加到结果串中
     string reversed;
     for (int i = str.length() - 1; i >= 0; i--)
     {
         reversed.append(1,str[i]);
     }
-    // 核心代码结束：将字符数组转换为字符串并返回
+    // 返回反转后的新字符串
     return reversed;
 }
 

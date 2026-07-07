@@ -42,7 +42,7 @@ vector<MultiTreeNode> readMultiTree(int n)
 
 BinaryTreeNode *convertMultiToBinary(vector<MultiTreeNode> &multiTree,int index)
 {
-    //TODO 将多叉树转化为二叉树的函数
+    // 左孩子指向第一个子结点，右孩子串接同层的兄弟结点
     BinaryTreeNode *root = new BinaryTreeNode(multiTree[index].data);
     if(multiTree[index].children.empty()) return root;
     root->left = convertMultiToBinary(multiTree, multiTree[index].children[0]);

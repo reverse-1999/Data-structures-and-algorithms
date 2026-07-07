@@ -5,7 +5,7 @@ using namespace std;
 // 冒泡排序
 void BubbleSort(int arr[], int n)
 {
-    // TODO: 实现冒泡排序逻辑
+    // 通过不断比较相邻元素，把较小值逐步交换到前面
     for(int i = 0;i < n;i++)
     {
         for(int j = 0;j<n;j++)

@@ -2,7 +2,7 @@
 using namespace std;
 
 int gcd(int x, int y) {
-    //---------------此处完成代码-----------------
+    // 使用欧几里得算法迭代求最大公约数
     int temp;
 	while (y != 0) {
 		temp = x % y;
@@ -13,7 +13,7 @@ int gcd(int x, int y) {
 }
 
 int main() {
-    //---------------此处完成代码-----------------
+    // 读入多组数据并逐行输出结果
     int N = 0;
     cin>>N;
     for(int i = 0;i<N;i++)

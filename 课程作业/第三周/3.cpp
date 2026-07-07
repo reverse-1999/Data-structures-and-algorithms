@@ -8,7 +8,7 @@ struct ListNode {
 };
 
 ListNode* removeNthFromEnd(ListNode* head, int n) {
-    //---------------此处完成代码-----------------
+    // 删除倒数第 n 个结点，先找到链表长度再定位前驱
     if(head == nullptr) {return nullptr;}
     int length = 1;
     ListNode* p1 = head;

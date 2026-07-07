@@ -14,6 +14,7 @@ class BinaryTree {
 };
        Node* root;
 public: BinaryTree() : root(NULL) {}
+    // 按层序输入构造二叉树，nullvalue 表示空结点
       // 完成代码
       void createTree(Type nullvalue)
       {
@@ -40,6 +41,7 @@ public: BinaryTree() : root(NULL) {}
               }
           }
       }
+      // 通过层序遍历统计树高
       int height() {
           if (root == nullptr) {
               return 0;
@@ -63,6 +65,7 @@ public: BinaryTree() : root(NULL) {}
           }
           return h;
       }
+      // 通过层序遍历统计结点总数
       int size() {
           if (root == nullptr) {
               return 0;
@@ -86,6 +89,7 @@ public: BinaryTree() : root(NULL) {}
           }
           return s;
       }
+      // 将左右两棵子树与根值合并成一棵新树
       void makeTree(Type value, BinaryTree& leftTree, BinaryTree& rightTree) {
           root = new Node(value, leftTree.root, rightTree.root);
           leftTree.root = nullptr;

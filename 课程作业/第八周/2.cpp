@@ -13,6 +13,7 @@ struct TreeNode {
 // 按“根结点 + 依次输入每个非空结点的左右孩子”的格式建树，-1 表示空结点
 TreeNode* buildTree(const vector<int>& nums) {
     /********** Begin **********/
+    // 依次读取层序数组，遇到 -1 就跳过对应孩子结点
     if (nums.empty()) return nullptr;
     TreeNode* root = new TreeNode(nums[0]);
     queue<TreeNode*> q;
@@ -39,6 +40,7 @@ TreeNode* buildTree(const vector<int>& nums) {
 // 层序遍历
 void levelOrder(TreeNode* root) {
     /********** Begin **********/
+    // 用队列完成层序遍历并输出结点值
     if(!root) return;
     queue<TreeNode*> q;
     q.push(root);

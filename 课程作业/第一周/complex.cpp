@@ -5,20 +5,20 @@ class Complex {
 public:
     int real;
     int imag;
-    // 请完成构造函数
+    // 构造一个带有实部和虚部的复数对象
     Complex(int r, int i)
     {
 		real = r;
 		imag = i;
     }
-    // 请完成运算符重载
+    // 重载加法运算符，返回两个复数的和
     Complex operator+(Complex c) {
 		Complex temp(0, 0);
 		temp.real = real + c.real;
 		temp.imag = imag + c.imag;
 		return temp;
     }
-    // 请完成输出函数
+    // 按常见数学格式输出复数
     void show() {
 			if (imag > 0 && real !=0) 
 				cout << real << "+" << imag << "i" << endl;

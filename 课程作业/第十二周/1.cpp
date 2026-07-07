@@ -10,7 +10,7 @@ class Solution
 public:
     vector<int> countVisitedNodes(vector<int> &g)
     {
-        // TODO 计算一个有向图中每个节点在遍历过程中可以访问到的节点数
+        // 逐点模拟沿出边走访，统计从每个起点能访问到的节点数量
         int n = g.size();
         vector<int> result(n);
         for(int i = 0;i < n;i++)

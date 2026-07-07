@@ -5,6 +5,7 @@ using namespace std;
 
 // 计算跨越中点的最大子数组和
 int crossSum(int nums[], int low, int mid, int high) {
+    // 分别向左、向右扫描，求跨越中点时能得到的最大连续和
         int left_sum = INT_MIN;
         int sum = 0;
         for (int i = mid; i >= low; i--) {
@@ -24,6 +25,7 @@ int crossSum(int nums[], int low, int mid, int high) {
 
 // 分治主函数
 int maxSubArray(int nums[], int low, int high) {
+    // 最大子数组只可能出现在左半区、右半区或跨越中点
     if (low == high) {
         return nums[low];
     }

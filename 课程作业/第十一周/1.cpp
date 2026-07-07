@@ -7,7 +7,7 @@ int main() {
     int n;
     cin >> n;
     vector<vector<int>> adjList(n);
-    // 实现核心转换逻辑
+    // 扫描邻接矩阵，把每一行的边信息转存到邻接表中
     for(int i = 0; i < n; i++) {
         for(int j = 0; j < n; j++) {
             int edge;
@@ -17,7 +17,7 @@ int main() {
             }
         }
     }    
-    // 实现排序输出
+    // 按顶点编号顺序输出，便于检查转换结果
     for(int i = 0; i < n; i++) {
         sort(adjList[i].begin(), adjList[i].end());
         cout << i << " ";

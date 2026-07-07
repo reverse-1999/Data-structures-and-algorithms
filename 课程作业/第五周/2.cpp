@@ -10,7 +10,7 @@ using namespace std;
 
 void countCharacters(const string& str) {
 
-    // 核心代码开始：统计每个字符的出现次数
+    // 统计字符频次，并维护按 ASCII 升序的输出顺序
     string char_str;
     vector<int> num;
     for (int i = 0; i < str.length() ; i++)
@@ -42,7 +42,7 @@ void countCharacters(const string& str) {
         {
             cout << char_str[k] << ':' << num[k] << endl;
         }
-        // 核心代码结束：(按ASCII码从小到大顺序排序字符)输出每个字符及其出现次数
+        // 逐行输出字符及其出现次数
     }
 
     int main() {

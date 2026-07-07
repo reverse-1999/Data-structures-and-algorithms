@@ -5,7 +5,7 @@
 using namespace std;
 
 int strStr(const string& haystack, const string& needle) {
-// 核心代码开始：遍历主字符串，寻找匹配的起始位置
+// 先构造 next 数组，再用 KMP 在主串中查找匹配位置
     if (needle.empty()) return 0;
     if (haystack.empty() || needle.size() > haystack.size()) return -1;
 
@@ -29,7 +29,7 @@ int strStr(const string& haystack, const string& needle) {
     if (j == static_cast<int>(needle.length())) return i - j;
     return -1;
     
-// 核心代码结束：如果匹配成功，返回起始索引
+// 匹配成功时返回起始索引，失败返回 -1
 
 }
 

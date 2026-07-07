@@ -33,7 +33,7 @@ public:
 	} //回收栈空间
 
 	void push(char elem) {
-		//请完成入栈函数代码
+		// 将新结点压入栈顶，空栈时直接作为头结点
         Node* new_head = new Node;
         new_head->data = elem;
         new_head->next = nullptr;
@@ -46,7 +46,7 @@ public:
 	};
 
 	void pop() {
-		//请完成出栈函数代码
+		// 弹出栈顶结点并释放内存
         if(head == nullptr) return;
         else{
             Node* p = head;
@@ -61,7 +61,7 @@ public:
 bool Symbol_matching(string str){
 	Mystack stack;
 	map<char, char> dic = { {'}','{'}, {']','['}, {')','('} };
-	// 请完成符号匹配代码
+	// 遇到左括号入栈，遇到右括号则检查栈顶是否与之匹配
     for(int i = 0; i < str.size(); i++){
         if(str[i] == '{' || str[i] == '[' || str[i] == '(') stack.push(str[i]);
         else if(str[i] == '}' || str[i] == ']' || str[i] == ')'){

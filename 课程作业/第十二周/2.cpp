@@ -7,9 +7,10 @@ using namespace std;
 vector<int> dfsRes, bfsRes;
 vector<bool> visited;
 
+// 深度优先遍历，按邻接表中的顺序递归访问可达顶点
 void dfs(int u, const vector<vector<int>> &adj)
 {
-    // TODO 实现DFS遍历
+    // 标准 DFS：先标记当前点，再递归访问所有未访问邻接点
     int n = adj.size();
     visited[u] = 1;
     dfsRes.push_back(u);
@@ -20,9 +21,10 @@ void dfs(int u, const vector<vector<int>> &adj)
     }
 }
 
+// 广度优先遍历，从 0 号顶点开始分层访问
 void bfs(const vector<vector<int>> &adj)
 {
-    // TODO 实现BFS遍历
+    // 标准 BFS：用队列按层次扩展所有可达顶点
     int n = adj.size();
     queue<int> q;
     q.push(0);
@@ -55,7 +57,7 @@ int main()
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    // 邻接表排序保证访问顺序
+    // 邻接表排序保证 DFS 和 BFS 的访问顺序稳定
     for (auto &list : adj)
         sort(list.begin(), list.end());
     visited.assign(n, false);

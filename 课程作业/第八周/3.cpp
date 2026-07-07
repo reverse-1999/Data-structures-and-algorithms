@@ -24,6 +24,7 @@ vector<int> parseInput(const string& line) {
 // 按“根结点 + 依次输入每个非空结点的左右孩子”的格式建树，-1 表示空结点
 TreeNode* buildTree(const vector<int>& nums) {
     /********** Begin **********/
+    // 按层序序列构造二叉树，-1 表示空结点
     if (nums.empty()) return nullptr;
     TreeNode* root = new TreeNode(nums[0]);
     queue<TreeNode*> q;
@@ -51,7 +52,7 @@ TreeNode* buildTree(const vector<int>& nums) {
 // 利用前序遍历统计路径和等于 target 的根到叶路径条数
 int countPathSum(TreeNode* root, int currentSum, int target) {
     /********** Begin **********/
-    //递归解
+    // 递归统计每条根到叶路径的累计和是否等于目标值
     if (!root) return 0;
     if (!root->left && !root->right) { // 叶子节点
         return (currentSum + root->data == target) ? 1 : 0;

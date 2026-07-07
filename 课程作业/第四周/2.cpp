@@ -9,7 +9,7 @@ stack<int> number_stack;
 
 //从数字栈中取出栈顶的两个数字进行相关运算，结果放入栈中
 void math(char f) {
-	// 请完成匹配函数代码
+	// 按照后入先出顺序取出两个操作数，再根据运算符计算结果
     int a = number_stack.top();
     number_stack.pop();
     int b = number_stack.top();
@@ -28,7 +28,7 @@ int main() {
 	string str; 
 	getline(cin, str); 
 	int n = 0, j = 0, a[10];
-	// 请完成主函数代码
+    // 逐字符扫描表达式，分离数字和运算符并按优先级计算
     for(int i = 0; i < str.length(); i++)
     {
         if(str[i] == ' ') continue;

@@ -1,0 +1,400 @@
+================================================================================
+           C++ STL 常用容器成员方法速查表（期末复习版）
+================================================================================
+
+编码：UTF-8
+说明：每个容器列出常用方法、简要说明和典型用法示例。
+
+================================================================================
+一、vector（动态数组）
+================================================================================
+
+【构造】
+  vector<int> v;               // 空 vector
+  vector<int> v(n, val);       // n 个元素，每个初始化为 val
+  vector<int> v(arr, arr+n);   // 用数组初始化
+
+【容量】
+  v.size()                     // 返回元素个数（size_t）
+  v.capacity()                 // 返回当前分配的内存能容纳的元素数
+  v.empty()                    // 是否为空，返回 bool
+  v.resize(n)                  // 调整大小为 n，多出的用默认值填充
+  v.reserve(n)                 // 预留至少能容纳 n 个元素的空间（不改变 size）
+
+【访问】
+  v[i]                         // 下标访问，不检查越界
+  v.at(i)                      // 下标访问，越界抛异常
+  v.front()                    // 第一个元素
+  v.back()                     // 最后一个元素
+  v.data()                     // 返回底层数组的指针（C++11）
+
+【增删】
+  v.push_back(x)               // 末尾添加元素
+  v.pop_back()                 // 删除末尾元素
+  v.insert(it, x)              // 在迭代器 it 前插入 x，返回新元素迭代器
+  v.insert(it, n, x)           // 在 it 前插入 n 个 x
+  v.erase(it)                   // 删除 it 指向的元素，返回下一个迭代器
+  v.erase(l, r)                 // 删除 [l, r) 区间，返回下一个迭代器
+  v.clear()                     // 清空所有元素
+
+【其他】
+  v.assign(n, x)               // 清空并赋值为 n 个 x
+  v.assign(l, r)               // 清空并赋值为 [l, r) 区间
+  v.swap(v2)                   // 与 v2 交换内容（O(1)）
+  swap(v, v2)                  // 同上，非成员版本
+
+【遍历】
+  for (int i = 0; i < v.size(); i++) cout << v[i];
+  for (auto x : v) cout << x;
+  for (auto it = v.begin(); it != v.end(); ++it) cout << *it;
+
+【注意】
+  - 遍历中删除/插入元素后，迭代器可能失效，需接收 erase 的返回值。
+  - reserve 不改变 size，只影响 capacity；resize 改变 size。
+
+
+================================================================================
+二、string（字符串）
+================================================================================
+
+【构造】
+  string s;                    // 空字符串
+  string s = "abc";            // 初始化
+  string s(arr);               // 从 C 字符串构造
+  string s(n, 'c');            // n 个字符 'c'
+
+【容量】
+  s.size() / s.length()        // 返回字符个数（两者等价）
+  s.empty()                    // 是否为空
+  s.clear()                    // 清空
+  s.resize(n)                  // 调整长度为 n
+
+【访问】
+  s[i]                         // 下标访问
+  s.at(i)                      // 下标访问，越界抛异常
+  s.front()                    // 首字符（C++11）
+  s.back()                     // 尾字符（C++11）
+
+【修改】
+  s.push_back(c)               // 末尾追加字符
+  s.pop_back()                 // 删除末尾字符（C++11）
+  s.append(str)                // 末尾追加字符串
+  s += str / s += c            // 追加
+  s.insert(pos, str)           // 在 pos 位置插入字符串
+  s.erase(pos, len)            // 从 pos 开始删除 len 个字符
+  s.replace(pos, len, str)     // 替换从 pos 开始的 len 个字符为 str
+
+【查找】
+  s.find(str)                  // 返回首次出现位置，失败返回 string::npos
+  s.rfind(str)                 // 从后向前找，返回最后一次出现位置
+  s.find_first_of(chars)       // 返回任意 chars 中字符首次出现的位置
+  s.find_last_of(chars)        // 返回任意 chars 中字符最后出现的位置
+  s.substr(pos, len)           // 返回从 pos 开始的 len 个字符的子串
+
+【比较】
+  s.compare(str)               // 返回 <0 / =0 / >0，类似 strcmp
+  s == str / s != str          // 直接比较（重载了运算符）
+
+【转换】
+  s.c_str()                    // 返回 const char*（C 风格字符串）
+  stoi(s) / stol(s) / stod(s) // 字符串转 int / long / double
+  to_string(val)               // 数值转 string（非成员函数）
+
+【遍历】
+  for (char c : s) cout << c;
+  for (int i = 0; i < s.size(); i++) cout << s[i];
+
+
+================================================================================
+三、stack（栈，LIFO）
+================================================================================
+
+【包含头文件】<stack>
+
+【构造】
+  stack<int> st;               // 空栈
+
+【常用方法】
+  st.push(x)                   // 入栈
+  st.pop()                     // 出栈（不返回栈顶元素）
+  st.top()                     // 返回栈顶元素（不弹出）
+  st.size()                    // 返回元素个数
+  st.empty()                   // 是否为空
+
+【注意】
+  - pop() 不返回元素，需先 top() 再 pop()。
+  - stack 没有迭代器，不支持遍历，只能访问栈顶。
+
+
+================================================================================
+四、queue（队列，FIFO）
+================================================================================
+
+【包含头文件】<queue>
+
+【构造】
+  queue<int> q;                // 空队列
+
+【常用方法】
+  q.push(x)                    // 入队（队尾）
+  q.pop()                      // 出队（队首，不返回元素）
+  q.front()                    // 返回队首元素
+  q.back()                     // 返回队尾元素
+  q.size()                     // 返回元素个数
+  q.empty()                    // 是否为空
+
+【注意】
+  - pop() 不返回元素，需先 front() 再 pop()。
+  - queue 没有迭代器，不支持遍历。
+
+
+================================================================================
+五、deque（双端队列）
+================================================================================
+
+【包含头文件】<deque>
+
+【构造】
+  deque<int> dq;
+
+【容量】
+  dq.size() / dq.empty() / dq.clear()   // 同 vector
+
+【访问】
+  dq[i] / dq.at(i) / dq.front() / dq.back()   // 同 vector
+
+【增删（两端均支持）】
+  dq.push_back(x)             // 尾插
+  dq.push_front(x)            // 头插
+  dq.pop_back()               // 尾删
+  dq.pop_front()              // 头删
+  dq.insert(it, x)            // 在 it 前插入（效率低于 list）
+  dq.erase(it)                // 删除 it 指向的元素
+
+【注意】
+  - deque 支持下标访问，但插入删除效率介于 vector 和 list 之间。
+  - 适合需要在两端频繁操作的场景（如滑动窗口）。
+
+
+================================================================================
+六、priority_queue（优先队列 / 堆）
+================================================================================
+
+【包含头文件】<queue>
+
+【构造】
+  // 大顶堆（默认，最大元素在队首）
+  priority_queue<int> pq;
+
+  // 小顶堆（最小元素在队首）
+  priority_queue<int, vector<int>, greater<int>> pq;
+
+  // 自定义比较（大顶堆，按 first 排序）
+  priority_queue<pair<int,int>, vector<pair<int,int>>, less<pair<int,int>>> pq;
+
+【常用方法】
+  pq.push(x)                   // 入堆
+  pq.pop()                     // 弹出堆顶元素
+  pq.top()                     // 返回堆顶元素
+  pq.size()                    // 返回元素个数
+  pq.empty()                   // 是否为空
+
+【注意】
+  - priority_queue 没有 front()/back()，只有 top()。
+  - 没有迭代器，不支持遍历。
+  - 默认底层容器是 vector，比较器默认是 less（大顶堆）。
+
+
+================================================================================
+七、list（双向链表）
+================================================================================
+
+【包含头文件】<list>
+
+【构造】
+  list<int> lst;
+
+【增删（两端和中间）】
+  lst.push_back(x) / lst.push_front(x)
+  lst.pop_back()  / lst.pop_front()
+  lst.insert(it, x)            // 在 it 前插入，返回新元素迭代器
+  lst.erase(it)                // 删除 it 指向的元素，返回下一个迭代器
+  lst.clear()
+
+【容量】
+  lst.size()                   // 返回元素个数（C++11 起 O(1)）
+  lst.empty()
+  lst.resize(n)
+
+【特有操作（链表优势）】
+  lst.sort()                   // 链表专用排序（O(n log n)，无需随机访问）
+  lst.reverse()                // 反转链表
+  lst.unique()                 // 删除连续重复元素（需先 sort）
+  lst.splice(it, lst2)         // 将 lst2 所有元素移到 lst 的 it 位置
+  lst.merge(lst2)              // 合并两个已排序链表
+
+【遍历】
+  for (auto it = lst.begin(); it != lst.end(); ++it) cout << *it;
+  for (auto x : lst) cout << x;
+
+【注意】
+  - list 不支持下标访问（[] / at 均不可用）。
+  - 插入删除效率 O(1)（已知位置），但查找需 O(n)。
+
+
+================================================================================
+八、set / unordered_set（集合）
+================================================================================
+
+【包含头文件】<set> / <unordered_set>
+
+【构造】
+  set<int> s;                  // 有序集合（红黑树，自动升序）
+  unordered_set<int> us;       // 无序集合（哈希表，平均 O(1) 查找）
+
+【插入删除】
+  s.insert(x)                  // 插入元素，返回 pair<iterator, bool>
+  s.erase(x)                   // 按值删除，返回删除个数（0 或 1）
+  s.erase(it)                  // 按迭代器删除
+  s.clear()
+
+【查找】
+  s.find(x)                    // 找到返回迭代器，失败返回 s.end()
+  s.count(x)                   // 返回 0 或 1（set 中元素唯一）
+  s.contains(x)                // C++20 起，返回 bool
+
+【容量】
+  s.size() / s.empty()
+
+【遍历（set 有序，unordered_set 无序）】
+  for (auto it = s.begin(); it != s.end(); ++it) cout << *it;
+  for (auto x : s) cout << x;
+
+【set 特有】
+  s.lower_bound(x)             // 第一个 >= x 的迭代器
+  s.upper_bound(x)             // 第一个 >  x 的迭代器
+
+【注意】
+  - set 元素只读，不能通过迭代器修改（会破坏有序性）。
+  - unordered_set 遍历顺序不确定，平均查找 O(1)，最坏 O(n)。
+
+
+================================================================================
+九、map / unordered_map（映射 / 字典）
+================================================================================
+
+【包含头文件】<map> / <unordered_map>
+
+【构造】
+  map<string, int> mp;         // 按 key 升序排列
+  unordered_map<string, int> ump;  // 无序，哈希
+
+【插入】
+  mp[key] = value;             // 若 key 不存在则插入，存在则覆盖
+  mp.insert({key, value});     // 插入，若 key 已存在则不改变
+  mp.emplace(key, value);      // C++11，高效原地构造
+
+【访问】
+  mp[key]                      // 若 key 不存在会插入默认值（小心！）
+  mp.at(key)                   // 访问，key 不存在抛异常
+
+【删除】
+  mp.erase(key)                // 按键删除，返回删除个数
+  mp.erase(it)                 // 按迭代器删除
+  mp.clear()
+
+【查找】
+  mp.find(key)                 // 返回迭代器，失败返回 mp.end()
+  mp.count(key)                // 返回 0 或 1
+  mp.contains(key)             // C++20
+
+【容量】
+  mp.size() / mp.empty()
+
+【遍历】
+  // 迭代器
+  for (auto it = mp.begin(); it != mp.end(); ++it)
+      cout << it->first << " " << it->second;
+  // 范围 for
+  for (auto& p : mp)
+      cout << p.first << " " << p.second;
+
+【注意】
+  - map 的 key 是 const，不能修改。
+  - 用 mp[key] 访问时若 key 不存在会产生副作用（插入），建议用 find 或 at。
+  - unordered_map 的 key 需要支持哈希。
+
+
+================================================================================
+十、<algorithm> 常用函数
+================================================================================
+
+【包含头文件】<algorithm>、<numeric>
+
+【排序 & 反转】
+  sort(a, a+n)                         // 对 [a, a+n) 升序排序
+  sort(v.begin(), v.end())              // 对 vector 升序
+  sort(v.begin(), v.end(), greater<int>())  // 降序
+  sort(v.begin(), v.end(), [](int a, int b){ return a > b; });  // 自定义比较
+  reverse(a, a+n)                      // 反转区间
+  reverse(v.begin(), v.end())
+
+【去重】
+  unique(v.begin(), v.end())            // 将重复元素移到末尾，返回新逻辑终点迭代器
+  // 通常配合 erase 使用：
+  v.erase(unique(v.begin(), v.end()), v.end());
+
+【二分查找（要求区间已排序）】
+  lower_bound(v.begin(), v.end(), x)    // 返回第一个 >= x 的迭代器
+  upper_bound(v.begin(), v.end(), x)    // 返回第一个 >  x 的迭代器
+  binary_search(v.begin(), v.end(), x)  // 返回 bool，是否存在 x
+
+【最值 & 交换】
+  min(a, b) / max(a, b)                // 返回较小 / 较大值
+  min_element(v.begin(), v.end())       // 返回最小元素迭代器
+  max_element(v.begin(), v.end())       // 返回最大元素迭代器
+  swap(a, b)                            // 交换两个变量
+
+【排列】
+  next_permutation(v.begin(), v.end())  // 将序列变为下一个字典序排列，返回 bool
+  prev_permutation(v.begin(), v.end())   // 上一个字典序排列
+
+【计数 & 查找】
+  count(v.begin(), v.end(), x)          // 统计 x 出现次数
+  find(v.begin(), v.end(), x)           // 返回第一个等于 x 的迭代器，失败返回 v.end()
+
+【累加（<numeric>）】
+  accumulate(v.begin(), v.end(), 0)     // 求和，初始值为 0
+
+
+================================================================================
+十一、常用技巧 & 易错点
+================================================================================
+
+1. 迭代器失效
+   - vector：insert/erase 会使当前及之后位置的迭代器失效。
+   - 解决：it = v.erase(it);  // 接收返回值
+
+2. auto 与引用
+   - 遍历修改元素时用：for (auto& x : v) x *= 2;
+   - 否则只是修改副本。
+
+3. map 的 operator[]
+   - mp[key] 在 key 不存在时会插入（int 默认 0，string 默认 ""）。
+   - 只读查找请用 mp.find(key) 或 mp.at(key)。
+
+4. string 与 C 字符串
+   - 需要 C 风格字符串时（如某些旧 API）：s.c_str()
+
+5. 优先队列的小顶堆写法
+   priority_queue<int, vector<int>, greater<int>> pq;
+
+6. 清空容器
+   - 除 clear() 外，可用 swap 技巧释放内存：
+     vector<int>().swap(v);   // 清空并释放内存
+
+
+================================================================================
+                               END OF FILE
+================================================================================
+（内容由AI生成，仅供参考）

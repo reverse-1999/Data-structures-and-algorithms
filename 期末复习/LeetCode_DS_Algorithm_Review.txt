@@ -1,0 +1,446 @@
+# LeetCode 数据结构与算法期末复习题解（C++）
+
+---
+
+## 一、数组（Array）
+
+### 1. 两数之和（Two Sum）
+**题目描述摘要**：
+给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为 target 的两个整数的下标。
+
+**C++ 解法（哈希表）**
+```cpp
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> mp; // 存储数值和下标
+        for (int i = 0; i < nums.size(); i++) {
+            int complement = target - nums[i];
+            if (mp.count(complement)) {
+                return {mp[complement], i};
+            }
+            mp[nums[i]] = i;
+        }
+        return {};
+    }
+};
+```
+
+---
+
+### 2. 合并区间（Merge Intervals）
+**题目描述摘要**：
+给定一个区间集合，合并所有重叠的区间。
+
+**C++ 解法**
+```cpp
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
+        vector<vector<int>> res;
+        for (auto& interval : intervals) {
+            if (res.empty() || res.back()[1] < interval[0]) {
+                res.push_back(interval);
+            } else {
+                res.back()[1] = max(res.back()[1], interval[1]);
+            }
+        }
+        return res;
+    }
+};
+```
+
+---
+
+## 二、链表（Linked List）
+
+### 1. 反转链表（Reverse Linked List）
+**题目描述摘要**：
+反转一个单链表。
+
+**C++ 解法（迭代）**
+```cpp
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *prev = nullptr;
+        ListNode *curr = head;
+        while (curr) {
+            ListNode *next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+};
+```
+
+---
+
+### 2. 环形链表（Linked List Cycle）
+**题目描述摘要**：
+判断链表中是否有环。
+
+**C++ 解法（快慢指针）**
+```cpp
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        ListNode *slow = head, *fast = head;
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast) return true;
+        }
+        return false;
+    }
+};
+```
+
+---
+
+## 三、栈（Stack）
+
+### 1. 有效的括号（Valid Parentheses）
+**题目描述摘要**：
+判断字符串中的括号是否匹配。
+
+**C++ 解法**
+```cpp
+#include <stack>
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> st;
+        for (char c : s) {
+            if (c == '(' || c == '{' || c == '[') {
+                st.push(c);
+            } else {
+                if (st.empty()) return false;
+                if ((c == ')' && st.top() != '(') ||
+                    (c == '}' && st.top() != '{') ||
+                    (c == ']' && st.top() != '[')) return false;
+                st.pop();
+            }
+        }
+        return st.empty();
+    }
+};
+```
+
+---
+
+## 四、队列（Queue）
+
+### 1. 用栈实现队列（Implement Queue using Stacks）
+**题目描述摘要**：
+仅使用两个栈实现队列。
+
+**C++ 解法**
+```cpp
+#include <stack>
+
+class MyQueue {
+    stack<int> in, out;
+    void transfer() {
+        while (!in.empty()) {
+            out.push(in.top());
+            in.pop();
+        }
+    }
+public:
+    void push(int x) {
+        in.push(x);
+    }
+    int pop() {
+        if (out.empty()) transfer();
+        int val = out.top();
+        out.pop();
+        return val;
+    }
+};
+```
+
+---
+
+## 五、二叉树（Binary Tree）
+
+### 1. 二叉树的中序遍历（Inorder Traversal）
+**题目描述摘要**：
+返回二叉树中序遍历结果。
+
+**C++ 解法（递归）**
+```cpp
+#include <vector>
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+};
+
+class Solution {
+public:
+    void inorder(TreeNode* root, vector<int>& res) {
+        if (!root) return;
+        inorder(root->left, res);
+        res.push_back(root->val);
+        inorder(root->right, res);
+    }
+};
+```
+
+---
+
+### 2. 二叉树的最大深度（Maximum Depth of Binary Tree）
+**题目描述摘要**：
+求二叉树的最大深度。
+
+**C++ 解法**
+```cpp
+class Solution {
+public:
+    int maxDepth(TreeNode* root) {
+        if (!root) return 0;
+        return 1 + max(maxDepth(root->left), maxDepth(root->right));
+    }
+};
+```
+
+---
+
+## 六、图（Graph）
+
+### 1. 岛屿数量（Number of Islands）
+**题目描述摘要**：
+给定一个二维网格，计算岛屿数量。
+
+**C++ 解法（DFS）**
+```cpp
+#include <vector>
+
+class Solution {
+    void dfs(vector<vector<char>>& grid, int i, int j) {
+        if (i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size()) return;
+        if (grid[i][j] != '1') return;
+        grid[i][j] = '0';
+        dfs(grid, i + 1, j);
+        dfs(grid, i - 1, j);
+        dfs(grid, i, j + 1);
+        dfs(grid, i, j - 1);
+    }
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int count = 0;
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid[0].size(); j++) {
+                if (grid[i][j] == '1') {
+                    dfs(grid, i, j);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+};
+```
+
+---
+
+## 七、哈希表（Hash Table）
+
+### 1. 字母异位词分组（Group Anagrams）
+**题目描述摘要**：
+将字母异位词分组。
+
+**C++ 解法**
+```cpp
+#include <vector>
+#include <string>
+#include <unordered_map>
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> mp;
+        for (string s : strs) {
+            string key = s;
+            sort(key.begin(), key.end());
+            mp[key].push_back(s);
+        }
+        vector<vector<string>> res;
+        for (auto& p : mp) {
+            res.push_back(p.second);
+        }
+        return res;
+    }
+};
+```
+
+---
+
+## 八、排序（Sorting）
+
+### 1. 排序数组（Sort an Array）
+**题目描述摘要**：
+对数组进行排序（快排示例）。
+
+**C++ 解法**
+```cpp
+class Solution {
+    void quickSort(vector<int>& nums, int l, int r) {
+        if (l >= r) return;
+        int pivot = nums[l + r >> 1];
+        int i = l - 1, j = r + 1;
+        while (i < j) {
+            do i++; while (nums[i] < pivot);
+            do j--; while (nums[j] > pivot);
+            if (i < j) swap(nums[i], nums[j]);
+        }
+        quickSort(nums, l, j);
+        quickSort(nums, j + 1, r);
+    }
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        quickSort(nums, 0, nums.size() - 1);
+        return nums;
+    }
+};
+```
+
+---
+
+## 九、搜索（Searching）
+
+### 1. 二分查找（Binary Search）
+**题目描述摘要**：
+在有序数组中查找目标值。
+
+**C++ 解法**
+```cpp
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int l = 0, r = nums.size() - 1;
+        while (l <= r) {
+            int mid = l + r >> 1;
+            if (nums[mid] == target) return mid;
+            else if (nums[mid] < target) l = mid + 1;
+            else r = mid - 1;
+        }
+        return -1;
+    }
+};
+```
+
+---
+
+## 十、动态规划（Dynamic Programming）
+
+### 1. 爬楼梯（Climbing Stairs）
+**题目描述摘要**：
+每次可以爬 1 或 2 阶，求到第 n 阶的方法数。
+
+**C++ 解法**
+```cpp
+class Solution {
+public:
+    int climbStairs(int n) {
+        if (n <= 2) return n;
+        int a = 1, b = 2;
+        for (int i = 3; i <= n; i++) {
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+        return b;
+    }
+};
+```
+
+---
+
+## 十一、贪心（Greedy）
+
+### 1. 跳跃游戏（Jump Game）
+**题目描述摘要**：
+判断是否能跳到最后一个位置。
+
+**C++ 解法**
+```cpp
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int reach = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > reach) return false;
+            reach = max(reach, i + nums[i]);
+        }
+        return true;
+    }
+};
+```
+
+---
+
+## 十二、回溯（Backtracking）
+
+### 1. 全排列（Permutations）
+**题目描述摘要**：
+给定不含重复数字的数组，返回其全排列。
+
+**C++ 解法**
+```cpp
+#include <vector>
+
+class Solution {
+    void backtrack(vector<int>& nums, vector<int>& path, vector<bool>& used, vector<vector<int>>& res) {
+        if (path.size() == nums.size()) {
+            res.push_back(path);
+            return;
+        }
+        for (int i = 0; i < nums.size(); i++) {
+            if (used[i]) continue;
+            used[i] = true;
+            path.push_back(nums[i]);
+            backtrack(nums, path, used, res);
+            path.pop_back();
+            used[i] = false;
+        }
+    }
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> path;
+        vector<bool> used(nums.size(), false);
+        backtrack(nums, path, used, res);
+        return res;
+    }
+};
+```
+
+---
+
+## 使用说明
+- 以上内容已完全结构化，覆盖数组、链表、栈、队列、二叉树、图、哈希表、排序、搜索、动态规划、贪心、回溯等主题。
+- 每道题目包含：题目名称、题目描述摘要、C++ 代码解法（含注释）。
+- 文件编码：UTF-8
+- 文件路径：D:\code c++\Data structures and algorithms\期末复习\LeetCode_DS_Algorithm_Review.txt
+（内容由AI生成，仅供参考）

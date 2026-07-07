@@ -15,11 +15,11 @@ int strStr(const string& haystack, const string& needle) {
     vector<int> next(needle.size());
     next[0] = -1;//子串只有一个元素时，最长公共前后缀长度为0
     int k = -1;//最大公共前后缀长度-1
-    for(int j = 1;j < needle.length()-1;j++){
+    for(int j = 1;j < needle.length();j++){
         k = next[j-1];
-        while(k >=0 && needle[j] != needle[k+1])
+        while(k >=0 && needle[j] != needle[k+1])//在有最大公共前后缀长度的情况下，当前字符不匹配时，回退到上一个最大公共前后缀长度
         {
-            k = next[k];
+            k = next[k];//
         }
         if(needle[j] == needle[k+1]) k++;
         next[j] = k;
@@ -30,7 +30,8 @@ int strStr(const string& haystack, const string& needle) {
     int j = 0;
     while (i < haystack.length() && j < needle.length()) {
         if (j == -1 || haystack[i] == needle[j]) { i++; j++; }
-        else { j = next[j]+1; }
+        else if (j == 0) {j = -1;}  
+        else { j = next[j-1]+1; }
     }
     if (j == static_cast<int>(needle.length())) return i - j;
     return -1;
